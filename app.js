@@ -44,6 +44,7 @@ app.listen(3000);
 // }
 // console.log(newArray);
 
+//maping method 
 
 // const input = [1, 2, 3 , 4 ,5]
 
@@ -53,3 +54,33 @@ app.listen(3000);
 
 // const ans = input.map(transform)
 // console.log(ans)
+
+
+// filtering method
+
+// const arr = [1,2,3,4,5]
+// const newArr = [];
+// for(i=0;i<length.arr;i++){
+//     if(arr[i]%2==0){
+//         newArr.push(arr[i])
+//     }
+// }
+// console.log(newArry);
+
+
+// const arr = [1,2,3,4,5];
+// const newArr = [];
+
+// function filterLogic(n){
+//     if(n%2 == 0){
+//         return true ;
+//     }else{
+//         return false;
+//     }
+// }
+// const ans = arr.filter(filterLogic)
+
+// console.log(ans);
+
+
+
