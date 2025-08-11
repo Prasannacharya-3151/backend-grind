@@ -4,14 +4,14 @@ const app = express();
 
 app.use(express.json());
 
-function checkTicket(re,res,next){
+function checkTicket(req,res,next){
     const hasTicket = req.query.ticket;
     if(hasTicket==="true"){
         next()
     }else{
-        res.json({
-            message:"ticket is not there pls go back and take a ticket"
-        })
+       
+            res.send("u dont have ticket pls go back and take a ticket")
+        
     }
 }
 
@@ -20,18 +20,18 @@ function checkAge(req,res,next){
     if(age>=10){
         next()
     }else{
-        res.json({
-            message:"your age ia atleast more then 10"
-        })
+        
+           res.json("your age ia atleast more then 10")
+      
     }
 }
 
 function checkVIP(req, res, next){
-    const checkVIP = req.query.checkVIP==="true"
-    if(ischeckVIP){
-        res.json({
-            message:"VIP has granted to your ticket"
-        })
+    const isVIP = req.query.VIP==="true"
+    if(isVIP){
+        
+            console.log("VIP has granted to your ticket")
+       
     }else{
         next()
     }
@@ -39,7 +39,7 @@ function checkVIP(req, res, next){
 
 app.get("/wonderla/ride", checkTicket, checkAge, checkVIP, (req, res)=>{
     res.json({
-        message :"welcome to the wondela riding"
+        message :"welcome to the wonderla riding"
     })
 })
 
