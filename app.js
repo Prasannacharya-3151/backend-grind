@@ -22,7 +22,7 @@ app.post("/users", (req,res)=>{
     const newUser = req.body
     res.json({
         message:"user add successfully",
-        user: newUser   // we are declaring qa property(property decalration)
+        user: newUser   // we are declaring a property(property decalration)
     })
 })
 
