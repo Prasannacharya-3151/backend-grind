@@ -3,28 +3,28 @@ const app = express();
 
 app.use(express.json());
 
-let burgers = ["cheesBurger"];
+let burgers = ["Chees Burger"];
 
-app.get("/",(req,res)=>{
+app.get("/", (req,res)=>{
     
     res.json({
-        message:burgers
+        availableBurgers:burgers
     })
 })
 
-app.post("/",(req,res)=>{
+app.post("/", (req,res)=>{
     const newBurger = req.body.burger;
     burgers.push(newBurger)
     
     res.json({
-        message:newBurger,
+        message:"Burger added",
         burgers: burgers
     })
 })
 
 app.put("/",(req,res)=>{
-    const updateBurger = req.body.burgers
-    burgers[0] = updateBurger
+    const updateBurger = req.body.burger;
+    burgers[0] = updateBurger;
 
     res.json({
         msg: "burger upadted",
@@ -38,6 +38,7 @@ app.delete("/", (req,res)=>{
 
     res.json({
         msg:"burger deleted",
+        burgers : burgers
        
     })
 
