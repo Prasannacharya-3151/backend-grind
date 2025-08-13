@@ -31,7 +31,7 @@ app.post("/signin", function(req, res){
 
     let foundUser = null;
 
-    for (let i = 0; i<= users.length; i==){
+    for (let i = 0; i < users.length; i++){
         if(users[i].username == username && users[i].password == password){
             foundUser = users[i]
         }
@@ -45,9 +45,10 @@ app.post("/signin", function(req, res){
         })
     } else {
         res.status(403).send({
-            mess: "Invalid username or password"
+            msg: "Invalid username or password"
         })
     }
+    console.log(foundUser)
 })
 
 app.listen(3000, function(){
