@@ -35,6 +35,7 @@ app.post("/signin", function(req, res){
         if(users[i].username == username && users[i].password == password){
             foundUser = users[i]
         }
+        console.log(users)
     }
 
     if (foundUser){
@@ -48,7 +49,30 @@ app.post("/signin", function(req, res){
             msg: "Invalid username or password"
         })
     }
-    console.log(foundUser)
+    console.log(users)
+})
+
+app.get("/me", function(req, res){
+    const token = req.headers.token;
+    const foundUser = null;
+
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].token == token) {
+            foundUser = user[i]
+        }
+    }
+
+    if (foundUser) {
+        res.json({
+            username : foundUser.username,
+            password : foundUser.password
+        })
+    } else {
+        res.json({
+            msg: "token is invalid"
+        })
+    }
+    }
 })
 
 app.listen(3000, function(){
