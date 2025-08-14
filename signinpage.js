@@ -36,6 +36,7 @@ app.post("/signin", function(req, res){
             foundUser = users[i]
         }
         console.log(users)
+      
     }
 
     if (foundUser){
@@ -50,6 +51,7 @@ app.post("/signin", function(req, res){
         })
     }
     console.log(users)
+    
 })
 
 app.get("/me", function(req, res){
@@ -58,7 +60,7 @@ app.get("/me", function(req, res){
 
     for (let i = 0; i < users.length; i++) {
         if (users[i].token == token) {
-            foundUser = user[i]
+            foundUser = users[i]
         }
     }
 
@@ -72,7 +74,7 @@ app.get("/me", function(req, res){
             msg: "token is invalid"
         })
     }
-    }
+    
 })
 
 app.listen(3000, function(){
