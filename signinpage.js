@@ -60,7 +60,7 @@ app.get("/me", function(req, res){
 
     for (let i = 0; i < users.length; i++) {
         if (users[i].token == token) {
-        foundUser = users[i]
+        foundUser = users[i] 
         }
     }
 
