@@ -55,6 +55,15 @@ app.get("/me", function(req, res){
         }
     }
 
-    if(foundUser)
+    if(foundUser){
+        res.json({
+            username: foundUser.username,
+            password: foundUser.password
+        })
+    } else {
+        res.status(403).send({
+            msg:"invalid token"
+        })
+    }
 
 })
