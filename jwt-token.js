@@ -23,6 +23,8 @@ app.post("/signin", function(req, res) {
     const username = req.body.username;
     const password = req.body.password;
 
+//maps and filter
+
     let foundUser = null;
 
     for (let i = 0; i < users.length; i++) {
@@ -32,8 +34,12 @@ app.post("/signin", function(req, res) {
     }
 
     if (foundUser) {
-        const token = generateToken();
-        foundUser.token = token;
+        const token = JWT_SECRET.substring({
+            username : username
+        }, JWT_SECRET);
+
+        // foundUser.token = token;
+
         res.json({
             token : token
         })
@@ -49,6 +55,7 @@ app.get("/me", function(req, res){
     const token = req.headers.token;
     const decodedInformation = JWT_SECRET.verify(token, JWT_SECRET);
     const username = decodedInformation.username;
+
     foundUser = null;
 
     for (i=0; i < users.length; i++) {
