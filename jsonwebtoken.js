@@ -1,6 +1,9 @@
 const express = require("express")
+const jwt = require("jsonwebtoken")
 const JWT_SECRET = "ramdamharikiratloverkirar"
 const app = express()
+
+app.use(express.json())
 
 const users = [];
 
@@ -34,7 +37,7 @@ app.post("/signin", function(req, res) {
     }
 
     if (foundUser) {
-        const token = JWT_SECRET.substring({
+        const token = jwt.sign({
             username : username
         }, JWT_SECRET);
 
@@ -53,13 +56,13 @@ app.post("/signin", function(req, res) {
 
 app.get("/me", function(req, res){
     const token = req.headers.token;
-    const decodedInformation = JWT_SECRET.verify(token, JWT_SECRET);
-    const username = decodedInformation.username;
+    const decodedInformation = jwt.verify(token, JWT_SECRET);
+    const username = decodedInformation.username
 
-    foundUser = null;
+    let foundUser = null;
 
-    for (i=0; i < users.length; i++) {
-        if(users[i].token == token){
+    for (let i=0; i < users.length; i++) {
+        if(users[i].username == username){
             foundUser = users[i];
         }
     }
@@ -76,3 +79,5 @@ app.get("/me", function(req, res){
     }
 
 })
+
+app.listen(3000);
