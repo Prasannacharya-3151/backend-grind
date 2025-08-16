@@ -47,6 +47,8 @@ app.post("/signin", function(req, res) {
 
 app.get("/me", function(req, res){
     const token = req.headers.token;
+    const decodedInformation = JWT_SECRET.verify(token, JWT_SECRET);
+    const username = decodedInformation.username;
     foundUser = null;
 
     for (i=0; i < users.length; i++) {
