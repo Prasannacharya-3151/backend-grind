@@ -38,7 +38,7 @@ app.post("/signin", function(req, res) {
 
     if (foundUser) {
         const token = jwt.sign({
-            username : username
+            username : username,
         }, JWT_SECRET);
 
         // foundUser.token = token;
@@ -54,30 +54,37 @@ app.post("/signin", function(req, res) {
     console.log(users)
 })
 
-app.get("/me", function(req, res){
+app.get("/me", function(req, res) {
     const token = req.headers.token;
-    const decodedInformation = jwt.verify(token, JWT_SECRET);
-    const username = decodedInformation.username
 
+    if (!token) {
+        return res.status(401).send({ msg: "Token is required" });
+    }
+
+    let username;
+    try {
+        const decodedInformation = jwt.verify(token, JWT_SECRET);
+        username = decodedInformation.username;
+    } catch(err) {
+        return res.status(403).send({ msg: "Invalid token" });
+    }
     let foundUser = null;
-
     for (let i=0; i < users.length; i++) {
         if(users[i].username == username){
             foundUser = users[i];
         }
     }
 
-    if(foundUser){
+    if (foundUser) {
         res.json({
-            username: foundUser.username,
-            password: foundUser.password
-        })
+            username: foundUser.username
+        });
     } else {
-        res.status(403).send({
-            msg:"invalid token"
-        })
+        res.status(403).send({ msg: "Invalid token" });
     }
+});
 
-})
 
-app.listen(3000);
+app.listen(3000, () => {
+    console.log("Server running on http://localhost:3000");
+});
