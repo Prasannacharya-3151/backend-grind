@@ -20,6 +20,7 @@ app.post("/signup", function(req, res){
     res.json({
         msg: "you are signed up"
     })
+    console.log("users")
 })
 
 app.post("/signin", function(req, res){
@@ -53,7 +54,7 @@ app.post("/signin", function(req, res){
 })
 
 app.get("/me", function(req, res) {
-    const token = req.header.token;
+    const token = req.headers.token;
 
     const decodedData = jwt.verify(token, JWT_SECRET)
 
