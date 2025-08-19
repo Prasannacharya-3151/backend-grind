@@ -53,18 +53,7 @@ app.post("/signin", function(req, res){
 
 })
 
-function auth(req, res, next) {
-    const token = req.headers.token;
-    const decodedData = jwt.verify(token, JWT_SECRET);
-    if(decodedData.username){
-        req.username = decodedData.username;
-        next()
-    } else {
-        res.json({
-            message: "you are not logged in"
-        })
-    }
-}
+
 
 app.get("/me", function(req, res) {
     const token = req.headers.token;
