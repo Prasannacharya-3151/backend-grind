@@ -38,7 +38,20 @@ app.post("/signin", function(req, res){
     if(foundUser){
         const token = jwt.sign({
             username:username,
-            password:password
+            password:password,
+            firstname,
+            lastname,
+            courses:[]
+        }, JWT_SECRET);
+
+        res.json({
+            token: token
+        })
+    } else{
+        res.status(403).json({
+            msg: "inavlid username or password"
         })
     }
+    console.log("users")
+    
 })
