@@ -1,86 +1,68 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "ramadomharkiratilovekiara"
+
+const JWT_SECRET = "kirat123123"
+
 const app = express();
 app.use(express.json());
 
-const users = []
+const users = [];
+
+function logger(req, res, next){
+    console.log(req.method + " request came");
+        next();
+}
+
+//localhost:3000
+app.get("/", function(req, res) {
+    res.sendFile(__dirname + "/public/index.html");
+} )
 
 app.post("/signup", function(req, res){
     const username = req.body.username;
     const password = req.body.password;
-
     users.push({
-        username:username,
+        useraname:username,
         password: password
     })
-
-    res.json({
-        msg:"you are signed up"
-    })
 })
+
+res.json({
+    msg: "you are signed in"
+})
+
 
 app.post("/signin", function(req, res){
     const username = req.body.usrename;
     const password = req.body.password;
 
-    let foundUser = null
+    let foundUser = null;
 
-    for (let i = 0; i< users.length; i++){
-        if(users[i].username == username && users[i].password === password){
+    for (let i = 0; i<users.length; i++){
+        if(users[i].useraname == username && users[i].password == password){
             foundUser = users[i];
-
         }
     }
 
-    if(foundUser){
+    if(!foundUser){
+        res.json({
+            msg: "credential incorrect"
+        })
+        return
+    } else {
         const token = jwt.sign({
-            username:username,
-            password:password,
-            firstname,
-            lastname,
-            courses:[]
+            username: users[i].username
         }, JWT_SECRET);
+        res.header("jwt", token);
+
+        res.header("random", "harikirat");
 
         res.json({
             token: token
         })
-    } else {
-        res.status(403).json({
-            msg: "inavlid username or password"
-        })
     }
-    console.log("users")
+})
+
+function auth(req, res, next) {
     
-})
-
-app.get("/me", function(req, res) {
-    const token = req.headers.token
-    const decodedInformation = jwt.verify(token, JWT_SECRET);
-    const unAuthDecodeinfo = decodedInformation.username;
-
-    let foundUser = null;
-
-    for (let i = 0; i< users.length; i++){
-        if (users[i].username == username){
-            foundUser = users[i]
-        }
-    }
-
-    if (foundUser) {
-        res.json({
-            username: foundUser.username,
-            password: foundUser.password
-        })
-    } else {
-        res.json({
-            message: "toke invalid"
-        })
-    }
-})
-
-
-app.listen(3000, function(){
-    console.log("server is running on port 3000")
-})
-
+}
