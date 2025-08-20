@@ -22,24 +22,26 @@ app.post("/signup", function(req, res){
     const username = req.body.username;
     const password = req.body.password;
     users.push({
-        useraname:username,
+        username:username,
         password: password
     })
+    res.json({
+    msg: "you are signed in"
+  })
 })
 
-res.json({
-    msg: "you are signed in"
-})
+//we should check if a user with this username already exist
+
 
 
 app.post("/signin", function(req, res){
-    const username = req.body.usrename;
+    const username = req.body.username;
     const password = req.body.password;
 
     let foundUser = null;
 
     for (let i = 0; i<users.length; i++){
-        if(users[i].useraname == username && users[i].password == password){
+        if(users[i].username == username && users[i].password == password){
             foundUser = users[i];
         }
     }
@@ -64,5 +66,38 @@ app.post("/signin", function(req, res){
 })
 
 function auth(req, res, next) {
-    
+    const token = req.headers.token;
+    const decodedData = jwt.verify(token, JWT_SECRET);
+
+    if(decodedData.username){
+        //req = {status, headers....,, username, password, userFirstName, random, ":123123"}
+        req.username = decodedData.usernamenext()
+    } else {
+        res.json({
+            msg: "you are not logged in"
+        })
+    }
 }
+
+app.get("/me",  auth, function(req, res){
+    //req = {status, headers...., username, password, userFirstName, random, ":123123"}
+    const currentUser = req.username;
+    //const token = req.heders.token;
+    //const decodedData = jwt.verify(token, JWT_SECRET);
+    //const currrentUser = decodedData.username
+
+    for (let i=0; i< users.length; i++) {
+        if (users[i].username == currentUser) {
+            foundUser = users[i];
+        }
+    }
+
+    res.json({
+        username: foundUser.username,
+        password: foundUser.password
+    })
+})
+
+app.listen(3000, function(){
+    console.log("server is running on port 3000");
+})
