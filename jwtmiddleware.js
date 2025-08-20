@@ -1,5 +1,5 @@
-const express = reqiure("express");
-const jwt = reqire("jsonwebtoken");
+const express = require("express");
+const jwt = require("jsonwebtoken");
 const JWT_SECRET = "ramadomharkiratilovekiara"
 const app = express();
 app.use(express.json());
@@ -18,8 +18,6 @@ app.post("/signup", function(req, res){
     res.json({
         msg:"you are signed up"
     })
-
-
 })
 
 app.post("/signin", function(req, res){
@@ -47,7 +45,7 @@ app.post("/signin", function(req, res){
         res.json({
             token: token
         })
-    } else{
+    } else {
         res.status(403).json({
             msg: "inavlid username or password"
         })
@@ -55,3 +53,34 @@ app.post("/signin", function(req, res){
     console.log("users")
     
 })
+
+app.get("/me", function(req, res) {
+    const token = req.headers.token
+    const decodedInformation = jwt.verify(token, JWT_SECRET);
+    const unAuthDecodeinfo = decodedInformation.username;
+
+    let foundUser = null;
+
+    for (let i = 0; i< users.length; i++){
+        if (users[i].username == username){
+            foundUser = users[i]
+        }
+    }
+
+    if (foundUser) {
+        res.json({
+            username: foundUser.username,
+            password: foundUser.password
+        })
+    } else {
+        res.json({
+            message: "toke invalid"
+        })
+    }
+})
+
+
+app.listen(3000, function(){
+    console.log("server is running on port 3000")
+})
+
